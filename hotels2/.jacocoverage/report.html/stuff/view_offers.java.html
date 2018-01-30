@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>view_offers.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;hotels2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">stuff</a> &gt; <span class="el_source">view_offers.java</span></div><h1>view_offers.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package stuff;
+//import stuff.*;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Calendar;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+/**
+ *
+ * @author Chris
+ */
+public class view_offers extends javax.swing.JFrame {
+<span class="nc" id="L22">    Connection conn=null;</span>
+<span class="nc" id="L23">    PreparedStatement ptst=null;</span>
+<span class="nc" id="L24">    ResultSet rs=null;</span>
+
+    /**
+     * Creates new form view_offers
+     */
+<span class="nc" id="L29">    public view_offers() {</span>
+<span class="nc" id="L30">        conn=main.connect(conn);</span>
+<span class="nc" id="L31">        initComponents();</span>
+<span class="nc" id="L32">        clear_table();</span>
+<span class="nc" id="L33">        showOffer();</span>
+<span class="nc" id="L34">        autoDelete();</span>
+<span class="nc" id="L35">    }</span>
+    protected static java.sql.Date convertUtilToSql(java.util.Date uDate) {
+<span class="nc" id="L37">        java.sql.Date sDate = new java.sql.Date(uDate.getTime());</span>
+<span class="nc" id="L38">        return sDate;</span>
+    }
+    
+    protected void autoDelete(){
+        //DIAGRAFI PROSFORWN POU EXOUNE LIKSEI
+<span class="nc" id="L43">        java.util.Date today= new java.util.Date();</span>
+<span class="nc" id="L44">        java.sql.Date tDate = convertUtilToSql(today);</span>
+        try{
+<span class="nc" id="L46">            String delete=&quot;select FINISH from OFFERS&quot;;</span>
+<span class="nc" id="L47">            ptst=conn.prepareStatement(delete);</span>
+<span class="nc" id="L48">            rs=ptst.executeQuery();</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            while(rs.next()){</span>
+<span class="nc" id="L50">                java.sql.Date Edate = rs.getDate(&quot;FINISH&quot;);</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">                if(tDate.after(Edate)){</span>
+                    try{
+<span class="nc" id="L53">                        String ndelete=&quot;delete from OFFERS where FINISH=?&quot;;</span>
+<span class="nc" id="L54">                        ptst=conn.prepareStatement(ndelete);</span>
+<span class="nc" id="L55">                        ptst.setDate(1,Edate);</span>
+<span class="nc" id="L56">                        ptst.execute();</span>
+<span class="nc" id="L57">                    }catch(Exception e){</span>
+<span class="nc" id="L58">                        JOptionPane.showMessageDialog(null, e, &quot;&quot;, JOptionPane.ERROR_MESSAGE);  </span>
+<span class="nc" id="L59">                    }</span>
+                }
+<span class="nc" id="L61">            }</span>
+<span class="nc" id="L62">        }catch(Exception e){</span>
+<span class="nc" id="L63">            JOptionPane.showMessageDialog(null, e, &quot;&quot;, JOptionPane.ERROR_MESSAGE);  </span>
+<span class="nc" id="L64">        }</span>
+<span class="nc" id="L65">    }</span>
+    
+    public ArrayList&lt;Offer&gt; offerList(){
+<span class="nc" id="L68">        main mn = new main();</span>
+<span class="nc" id="L69">        conn=mn.connect(conn);</span>
+<span class="nc" id="L70">        ArrayList&lt;Offer&gt; offerList = new ArrayList&lt;&gt;();</span>
+        try{
+<span class="nc" id="L72">            String sql=&quot;select distinct * from OFFERS&quot;;</span>
+<span class="nc" id="L73">            ptst=conn.prepareStatement(sql);</span>
+<span class="nc" id="L74">            rs=ptst.executeQuery();</span>
+            Offer offer;
+<span class="nc bnc" id="L76" title="All 2 branches missed.">            while(rs.next()){</span>
+<span class="nc" id="L77">                offer = new Offer(rs.getString(&quot;REGION&quot;),rs.getString(&quot;TYPE&quot;),rs.getDate(&quot;START&quot;),rs.getDate(&quot;FINISH&quot;),rs.getInt(&quot;PRICE&quot;));</span>
+<span class="nc" id="L78">                offerList.add(offer);</span>
+            }
+<span class="nc" id="L80">        }catch(Exception e){</span>
+<span class="nc" id="L81">            JOptionPane.showMessageDialog(null,e,&quot;&quot;,JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L82">        }</span>
+<span class="nc" id="L83">        return offerList;</span>
+    }
+    public void showOffer(){
+<span class="nc" id="L86">        ArrayList&lt;Offer&gt; offer = offerList();</span>
+<span class="nc" id="L87">        DefaultTableModel model = (DefaultTableModel) offertable.getModel();</span>
+<span class="nc" id="L88">        Object[] row = new Object[5];</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for(int i=0;i&lt;offer.size();i++){</span>
+<span class="nc" id="L90">            row[0]=offer.get(i).getRegion();</span>
+<span class="nc" id="L91">            row[1]=offer.get(i).getType();</span>
+<span class="nc" id="L92">            row[2]=offer.get(i).getSdate();</span>
+<span class="nc" id="L93">            row[3]=offer.get(i).getEdate();</span>
+<span class="nc" id="L94">            row[4]=offer.get(i).getDiscount();</span>
+<span class="nc" id="L95">            model.addRow(row);</span>
+        }
+<span class="nc" id="L97">    }</span>
+    
+    
+    
+    protected void clear_table(){
+<span class="nc" id="L102">        offertable.setModel(new DefaultTableModel(null,new String[]{&quot;Περιοχη&quot;,&quot;Τυπος&quot;,&quot;Εναρξη&quot;,&quot;Ληξη&quot;,&quot;Εκπτωση&quot;}));  </span>
+<span class="nc" id="L103">    }</span>
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="nc" id="L114">        jScrollPane1 = new javax.swing.JScrollPane();</span>
+<span class="nc" id="L115">        offertable = new javax.swing.JTable();</span>
+<span class="nc" id="L116">        insert = new javax.swing.JButton();</span>
+<span class="nc" id="L117">        refresh = new javax.swing.JButton();</span>
+<span class="nc" id="L118">        delete = new javax.swing.JButton();</span>
+
+<span class="nc" id="L120">        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L121">        setResizable(false);</span>
+
+<span class="nc" id="L123">        offertable.setModel(new javax.swing.table.DefaultTableModel(</span>
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                &quot;Περιοχη&quot;, &quot;Τυπος &quot;, &quot;Εναρξη &quot;, &quot;Ληξη&quot;, &quot;Εκπτωση&quot;
+            }
+<span class="nc" id="L133">        ) {</span>
+<span class="nc" id="L134">            boolean[] canEdit = new boolean [] {</span>
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+<span class="nc" id="L139">                return canEdit [columnIndex];</span>
+            }
+        });
+<span class="nc" id="L142">        jScrollPane1.setViewportView(offertable);</span>
+
+<span class="nc" id="L144">        insert.setText(&quot;Εισαγωγη Προσφορας&quot;);</span>
+<span class="nc" id="L145">        insert.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L147">                insertActionPerformed(evt);</span>
+<span class="nc" id="L148">            }</span>
+        });
+
+<span class="nc" id="L151">        refresh.setText(&quot;Ανανεωση Πινακα&quot;);</span>
+<span class="nc" id="L152">        refresh.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L154">                refreshActionPerformed(evt);</span>
+<span class="nc" id="L155">            }</span>
+        });
+
+<span class="nc" id="L158">        delete.setText(&quot;Διαγραφη Προσφορας&quot;);</span>
+<span class="nc" id="L159">        delete.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="nc" id="L161">                deleteActionPerformed(evt);</span>
+<span class="nc" id="L162">            }</span>
+        });
+
+<span class="nc" id="L165">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="nc" id="L166">        getContentPane().setLayout(layout);</span>
+<span class="nc" id="L167">        layout.setHorizontalGroup(</span>
+<span class="nc" id="L168">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L169">            .addGroup(layout.createSequentialGroup()</span>
+<span class="nc" id="L170">                .addContainerGap()</span>
+<span class="nc" id="L171">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L172">                    .addComponent(jScrollPane1)</span>
+<span class="nc" id="L173">                    .addGroup(layout.createSequentialGroup()</span>
+<span class="nc" id="L174">                        .addComponent(insert)</span>
+<span class="nc" id="L175">                        .addGap(60, 60, 60)</span>
+<span class="nc" id="L176">                        .addComponent(refresh)</span>
+<span class="nc" id="L177">                        .addGap(60, 60, 60)</span>
+<span class="nc" id="L178">                        .addComponent(delete)))</span>
+<span class="nc" id="L179">                .addContainerGap())</span>
+        );
+<span class="nc" id="L181">        layout.setVerticalGroup(</span>
+<span class="nc" id="L182">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="nc" id="L183">            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()</span>
+<span class="nc" id="L184">                .addContainerGap(99, Short.MAX_VALUE)</span>
+<span class="nc" id="L185">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="nc" id="L186">                    .addComponent(insert)</span>
+<span class="nc" id="L187">                    .addComponent(refresh)</span>
+<span class="nc" id="L188">                    .addComponent(delete))</span>
+<span class="nc" id="L189">                .addGap(18, 18, 18)</span>
+<span class="nc" id="L190">                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="nc" id="L191">                .addGap(70, 70, 70))</span>
+        );
+
+<span class="nc" id="L194">        pack();</span>
+<span class="nc" id="L195">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
+        //REFRESH PINAKA PORSOFWN
+<span class="nc" id="L199">        clear_table();</span>
+<span class="nc" id="L200">        showOffer();</span>
+<span class="nc" id="L201">    }//GEN-LAST:event_refreshActionPerformed</span>
+
+    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
+        //DIAGRAFI PROSFORAS APO TIN VASI
+<span class="nc" id="L205">        main mn = new main();</span>
+<span class="nc" id="L206">        conn=mn.connect(conn);</span>
+<span class="nc" id="L207">        int delrow=offertable.getSelectedRow();</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">        if(delrow==-1){</span>
+<span class="nc" id="L209">            JOptionPane.showMessageDialog(null, &quot;Παρακαλω διαλεξτε μια στηλη&quot;, &quot;&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L210">            return;</span>
+        }else{
+<span class="nc" id="L212">           int confdel=JOptionPane.showConfirmDialog(null, &quot;Σιγουρα θελετε να διαγραψετε την προσφορα ;&quot;, &quot;&quot;, JOptionPane.YES_NO_OPTION);</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">           if(confdel==0){</span>
+<span class="nc" id="L214">                String delreg=(String)offertable.getModel().getValueAt(delrow, 0);</span>
+<span class="nc" id="L215">                String deltype=(String)offertable.getModel().getValueAt(delrow, 1);</span>
+<span class="nc" id="L216">                Date   delsdat=(Date) offertable.getModel().getValueAt(delrow, 2);</span>
+<span class="nc" id="L217">                Date   delfdat=(Date) offertable.getModel().getValueAt(delrow, 3);</span>
+<span class="nc" id="L218">                int    delpric=(int)  offertable.getModel().getValueAt(delrow, 4);</span>
+            try{
+<span class="nc" id="L220">                String delsql=&quot;delete from OFFERS where REGION=? and TYPE=? and START=? and FINISH=? and PRICE=?&quot;;</span>
+<span class="nc" id="L221">                ptst=conn.prepareStatement(delsql);</span>
+<span class="nc" id="L222">                ptst.setString(1, delreg);</span>
+<span class="nc" id="L223">                ptst.setString(2, deltype);</span>
+<span class="nc" id="L224">                ptst.setDate(3, delsdat);</span>
+<span class="nc" id="L225">                ptst.setDate(4, delfdat);</span>
+<span class="nc" id="L226">                ptst.setInt(5, delpric);</span>
+<span class="nc" id="L227">                ptst.execute();</span>
+<span class="nc" id="L228">                clear_table();</span>
+<span class="nc" id="L229">                showOffer();</span>
+<span class="nc" id="L230">            }catch(Exception e){</span>
+<span class="nc" id="L231">                JOptionPane.showMessageDialog(null, e, &quot;&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L232">            }</span>
+           }
+        }
+<span class="nc" id="L235">    }//GEN-LAST:event_deleteActionPerformed</span>
+
+    private void insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertActionPerformed
+        //DIMIOURGIA PROSFORAS
+<span class="nc" id="L239">        create_offer coffer = new create_offer();</span>
+<span class="nc" id="L240">        coffer.setSize(500,500);</span>
+<span class="nc" id="L241">        coffer.setLocationRelativeTo(null);</span>
+<span class="nc" id="L242">        coffer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L243">        coffer.setVisible(true);</span>
+<span class="nc" id="L244">    }//GEN-LAST:event_insertActionPerformed</span>
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L256" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L258">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L259">                    break;</span>
+                }
+            }
+<span class="nc" id="L262">        } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L263">            java.util.logging.Logger.getLogger(view_offers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L264">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L265">            java.util.logging.Logger.getLogger(view_offers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L266">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L267">            java.util.logging.Logger.getLogger(view_offers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L268">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L269">            java.util.logging.Logger.getLogger(view_offers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L270">        }</span>
+        //&lt;/editor-fold&gt;
+
+        /* Create and display the form */
+<span class="nc" id="L274">        java.awt.EventQueue.invokeLater(new Runnable() {</span>
+            public void run() {
+<span class="nc" id="L276">                new view_offers().setVisible(true);</span>
+<span class="nc" id="L277">            }</span>
+        });
+<span class="nc" id="L279">    }</span>
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton delete;
+    private javax.swing.JButton insert;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable offertable;
+    private javax.swing.JButton refresh;
+    // End of variables declaration//GEN-END:variables
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>book_conf.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;hotels2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">stuff</a> &gt; <span class="el_source">book_conf.java</span></div><h1>book_conf.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package stuff;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Chris
+ */
+public class book_conf extends javax.swing.JFrame {
+    protected String tipos;
+<span class="fc" id="L16">    protected Connection conn=null;</span>
+<span class="fc" id="L17">    protected PreparedStatement ptst=null;   </span>
+<span class="fc" id="L18">    public book_conf() {</span>
+<span class="fc" id="L19">        initComponents();</span>
+<span class="fc" id="L20">    }</span>
+    protected static java.sql.Date convertUtilToSql(java.util.Date uDate) {
+<span class="fc" id="L22">        java.sql.Date sDate = new java.sql.Date(uDate.getTime());</span>
+<span class="fc" id="L23">        return sDate;</span>
+    }
+
+    
+    @SuppressWarnings(&quot;unchecked&quot;)
+    // &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+<span class="fc" id="L31">        jLabel1 = new javax.swing.JLabel();</span>
+<span class="fc" id="L32">        code = new javax.swing.JTextField();</span>
+<span class="fc" id="L33">        jLabel2 = new javax.swing.JLabel();</span>
+<span class="fc" id="L34">        lastname = new javax.swing.JTextField();</span>
+<span class="fc" id="L35">        jLabel3 = new javax.swing.JLabel();</span>
+<span class="fc" id="L36">        firstname = new javax.swing.JTextField();</span>
+<span class="fc" id="L37">        jLabel4 = new javax.swing.JLabel();</span>
+<span class="fc" id="L38">        region = new javax.swing.JTextField();</span>
+<span class="fc" id="L39">        jLabel5 = new javax.swing.JLabel();</span>
+<span class="fc" id="L40">        jLabel6 = new javax.swing.JLabel();</span>
+<span class="fc" id="L41">        chin = new javax.swing.JTextField();</span>
+<span class="fc" id="L42">        jLabel7 = new javax.swing.JLabel();</span>
+<span class="fc" id="L43">        chout = new javax.swing.JTextField();</span>
+<span class="fc" id="L44">        jLabel8 = new javax.swing.JLabel();</span>
+<span class="fc" id="L45">        charge = new javax.swing.JTextField();</span>
+<span class="fc" id="L46">        jButton1 = new javax.swing.JButton();</span>
+<span class="fc" id="L47">        jButton2 = new javax.swing.JButton();</span>
+<span class="fc" id="L48">        roomno = new javax.swing.JTextField();</span>
+
+<span class="fc" id="L50">        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L51">        setResizable(false);</span>
+
+<span class="fc" id="L53">        jLabel1.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L54">        jLabel1.setText(&quot;Κωδικος&quot;);</span>
+
+<span class="fc" id="L56">        code.setEditable(false);</span>
+
+<span class="fc" id="L58">        jLabel2.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L59">        jLabel2.setText(&quot;Επωνυμο&quot;);</span>
+
+<span class="fc" id="L61">        lastname.setEditable(false);</span>
+
+<span class="fc" id="L63">        jLabel3.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L64">        jLabel3.setText(&quot;Ονομα&quot;);</span>
+
+<span class="fc" id="L66">        firstname.setEditable(false);</span>
+
+<span class="fc" id="L68">        jLabel4.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L69">        jLabel4.setText(&quot;Περιοχη&quot;);</span>
+
+<span class="fc" id="L71">        region.setEditable(false);</span>
+
+<span class="fc" id="L73">        jLabel5.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L74">        jLabel5.setText(&quot;Αριθμος Δωματιου&quot;);</span>
+
+<span class="fc" id="L76">        jLabel6.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L77">        jLabel6.setText(&quot;Check-in&quot;);</span>
+
+<span class="fc" id="L79">        chin.setEditable(false);</span>
+
+<span class="fc" id="L81">        jLabel7.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L82">        jLabel7.setText(&quot;Checkout&quot;);</span>
+
+<span class="fc" id="L84">        chout.setEditable(false);</span>
+
+<span class="fc" id="L86">        jLabel8.setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); // NOI18N</span>
+<span class="fc" id="L87">        jLabel8.setText(&quot;Χρεωση&quot;);</span>
+
+<span class="fc" id="L89">        charge.setEditable(false);</span>
+
+<span class="fc" id="L91">        jButton1.setText(&quot;Καταχωρηση&quot;);</span>
+<span class="fc" id="L92">        jButton1.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L94">                jButton1ActionPerformed(evt);</span>
+<span class="fc" id="L95">            }</span>
+        });
+
+<span class="fc" id="L98">        jButton2.setText(&quot;Ακυρωση&quot;);</span>
+<span class="fc" id="L99">        jButton2.addActionListener(new java.awt.event.ActionListener() {</span>
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+<span class="fc" id="L101">                jButton2ActionPerformed(evt);</span>
+<span class="fc" id="L102">            }</span>
+        });
+
+<span class="fc" id="L105">        roomno.setEditable(false);</span>
+
+<span class="fc" id="L107">        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());</span>
+<span class="fc" id="L108">        getContentPane().setLayout(layout);</span>
+<span class="fc" id="L109">        layout.setHorizontalGroup(</span>
+<span class="fc" id="L110">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L111">            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L112">                .addGap(30, 30, 30)</span>
+<span class="fc" id="L113">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="fc" id="L114">                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L115">                        .addComponent(jButton1)</span>
+<span class="fc" id="L116">                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)</span>
+<span class="fc" id="L117">                        .addComponent(jButton2))</span>
+<span class="fc" id="L118">                    .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L119">                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)</span>
+<span class="fc" id="L120">                            .addComponent(jLabel2)</span>
+<span class="fc" id="L121">                            .addComponent(jLabel1)</span>
+<span class="fc" id="L122">                            .addComponent(jLabel3)</span>
+<span class="fc" id="L123">                            .addComponent(jLabel4)</span>
+<span class="fc" id="L124">                            .addComponent(jLabel5)</span>
+<span class="fc" id="L125">                            .addComponent(jLabel6)</span>
+<span class="fc" id="L126">                            .addComponent(jLabel7)</span>
+<span class="fc" id="L127">                            .addComponent(jLabel8))</span>
+<span class="fc" id="L128">                        .addGap(18, 18, 18)</span>
+<span class="fc" id="L129">                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="fc" id="L130">                            .addComponent(code)</span>
+<span class="fc" id="L131">                            .addComponent(lastname)</span>
+<span class="fc" id="L132">                            .addComponent(firstname)</span>
+<span class="fc" id="L133">                            .addComponent(region)</span>
+<span class="fc" id="L134">                            .addComponent(chin)</span>
+<span class="fc" id="L135">                            .addComponent(chout)</span>
+<span class="fc" id="L136">                            .addComponent(charge)</span>
+<span class="fc" id="L137">                            .addComponent(roomno, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))))</span>
+<span class="fc" id="L138">                .addContainerGap(30, Short.MAX_VALUE))</span>
+        );
+<span class="fc" id="L140">        layout.setVerticalGroup(</span>
+<span class="fc" id="L141">            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L142">            .addGroup(layout.createSequentialGroup()</span>
+<span class="fc" id="L143">                .addGap(20, 20, 20)</span>
+<span class="fc" id="L144">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="fc" id="L145">                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="fc" id="L146">                    .addComponent(code, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))</span>
+<span class="fc" id="L147">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L148">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)</span>
+<span class="fc" id="L149">                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L150">                    .addComponent(lastname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L151">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L152">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L153">                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L154">                    .addComponent(firstname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L155">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L156">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L157">                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L158">                    .addComponent(region, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L159">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L160">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)</span>
+<span class="fc" id="L161">                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)</span>
+<span class="fc" id="L162">                    .addComponent(roomno, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))</span>
+<span class="fc" id="L163">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L164">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L165">                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L166">                    .addComponent(chin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L167">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L168">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L169">                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L170">                    .addComponent(chout, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L171">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L172">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L173">                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)</span>
+<span class="fc" id="L174">                    .addComponent(charge, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))</span>
+<span class="fc" id="L175">                .addGap(18, 18, 18)</span>
+<span class="fc" id="L176">                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)</span>
+<span class="fc" id="L177">                    .addComponent(jButton1)</span>
+<span class="fc" id="L178">                    .addComponent(jButton2))</span>
+<span class="fc" id="L179">                .addContainerGap(27, Short.MAX_VALUE))</span>
+        );
+
+<span class="fc" id="L182">        pack();</span>
+<span class="fc" id="L183">    }// &lt;/editor-fold&gt;//GEN-END:initComponents</span>
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //Akirwsi kratisis meta apo confirm
+<span class="fc" id="L187">        int choise=JOptionPane.showConfirmDialog(null, &quot;Σιγουρα θελετε να ακυρωσετε την διαδικασια&quot;, &quot;&quot;,JOptionPane.YES_NO_OPTION);</span>
+<span class="pc bpc" id="L188" title="1 of 2 branches missed.">        if(choise==0){</span>
+<span class="fc" id="L189">            this.dispose();</span>
+<span class="fc" id="L190">            this.setVisible(false);</span>
+        }
+<span class="fc" id="L192">    }//GEN-LAST:event_jButton2ActionPerformed</span>
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //EISAGWGI STIN VASI
+<span class="fc" id="L196">        main mn = new main();</span>
+<span class="fc" id="L197">        conn=mn.connect(conn);</span>
+<span class="fc" id="L198">        String cd=code.getText();</span>
+<span class="fc" id="L199">        int icd=Integer.parseInt(cd);</span>
+        
+<span class="fc" id="L201">        String lanm=lastname.getText();</span>
+        
+<span class="fc" id="L203">        String finm=firstname.getText();</span>
+        
+<span class="fc" id="L205">        String reg=region.getText();</span>
+        
+<span class="fc" id="L207">        String room=roomno.getText();</span>
+<span class="fc" id="L208">        int iroom=Integer.parseInt(room);</span>
+        
+<span class="fc" id="L210">        String fdate=chin.getText();</span>
+<span class="fc" id="L211">        Date frdate=Date.valueOf(fdate);</span>
+<span class="fc" id="L212">        frdate=convertUtilToSql(frdate);</span>
+        
+<span class="fc" id="L214">        String tdate=chout.getText();</span>
+<span class="fc" id="L215">        Date todate=Date.valueOf(tdate);</span>
+<span class="fc" id="L216">        todate=convertUtilToSql(todate);</span>
+        
+<span class="fc" id="L218">        String chrg=charge.getText();</span>
+<span class="fc" id="L219">        int ichrg=Integer.parseInt(chrg);</span>
+        
+        try{
+<span class="fc" id="L222">            String insql=&quot;insert into BOOKS values(?,?,?,?,?,?,?,?,?)&quot;;</span>
+<span class="fc" id="L223">            ptst=conn.prepareStatement(insql);</span>
+<span class="fc" id="L224">            ptst.setInt(1,icd);</span>
+<span class="fc" id="L225">            ptst.setString(2,lanm);</span>
+<span class="fc" id="L226">            ptst.setString(3,finm);</span>
+<span class="fc" id="L227">            ptst.setString(4,reg);</span>
+<span class="fc" id="L228">            ptst.setInt(5,iroom);</span>
+<span class="fc" id="L229">            ptst.setDate(6,frdate);</span>
+<span class="fc" id="L230">            ptst.setDate(7,todate);</span>
+<span class="fc" id="L231">            ptst.setInt(8,ichrg);</span>
+<span class="fc" id="L232">            ptst.setString(9,tipos);</span>
+<span class="fc" id="L233">            ptst.execute();</span>
+<span class="fc" id="L234">            JOptionPane.showMessageDialog(null, &quot;Επιτυχης εισαγωγη κρατησης&quot;);</span>
+<span class="nc" id="L235">        }catch(Exception e){</span>
+<span class="nc" id="L236">            JOptionPane.showMessageDialog(null, e, &quot;&quot;, JOptionPane.ERROR_MESSAGE);</span>
+<span class="fc" id="L237">        }</span>
+<span class="fc" id="L238">    }//GEN-LAST:event_jButton1ActionPerformed</span>
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //&lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot; Look and feel setting code (optional) &quot;&gt;
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+<span class="nc bnc" id="L250" title="All 2 branches missed.">            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">                if (&quot;Nimbus&quot;.equals(info.getName())) {</span>
+<span class="nc" id="L252">                    javax.swing.UIManager.setLookAndFeel(info.getClassName());</span>
+<span class="nc" id="L253">                    break;</span>
+                }
+            }
+<span class="nc" id="L256">        } catch (ClassNotFoundException ex) {</span>
+<span class="nc" id="L257">            java.util.logging.Logger.getLogger(book_conf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L258">        } catch (InstantiationException ex) {</span>
+<span class="nc" id="L259">            java.util.logging.Logger.getLogger(book_conf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L260">        } catch (IllegalAccessException ex) {</span>
+<span class="nc" id="L261">            java.util.logging.Logger.getLogger(book_conf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L262">        } catch (javax.swing.UnsupportedLookAndFeelException ex) {</span>
+<span class="nc" id="L263">            java.util.logging.Logger.getLogger(book_conf.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);</span>
+<span class="nc" id="L264">        }</span>
+        //&lt;/editor-fold&gt;
+
+        /* Create and display the form */
+<span class="nc" id="L268">        java.awt.EventQueue.invokeLater(new Runnable() {</span>
+            public void run() {
+<span class="nc" id="L270">                new book_conf().setVisible(true);</span>
+<span class="nc" id="L271">            }</span>
+        });
+<span class="nc" id="L273">    }</span>
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    protected javax.swing.JTextField charge;
+    protected javax.swing.JTextField chin;
+    protected javax.swing.JTextField chout;
+    protected javax.swing.JTextField code;
+    protected javax.swing.JTextField firstname;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    protected javax.swing.JTextField lastname;
+    protected javax.swing.JTextField region;
+    protected javax.swing.JTextField roomno;
+    // End of variables declaration//GEN-END:variables
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
